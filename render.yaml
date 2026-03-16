@@ -1,0 +1,93 @@
+services:
+  # -----------------------------
+  # Eureka Server
+  # -----------------------------
+  - type: web
+    name: eureka-server
+    runtime: docker
+    dockerContext: ./EurekaServer
+    repo: https://github.com/StartYourOwnBiz/EbankingSolutions
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8761
+      - key: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+        value: "false"
+      - key: EUREKA_CLIENT_FETCH_REGISTRY
+        value: "false"
+
+  # -----------------------------
+  # API Gateway
+  # -----------------------------
+  - type: web
+    name: bank-api-gateway
+    runtime: docker
+    dockerContext: ./BankAPIGateway
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server-CHANGE_ME.onrender.com/eureka/
+
+  # -----------------------------
+  # Account Service
+  # -----------------------------
+  - type: web
+    name: account-service
+    runtime: docker
+    dockerContext: ./accountservice
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server-CHANGE_ME.onrender.com/eureka/
+
+  # -----------------------------
+  # Beneficiary Service
+  # -----------------------------
+  - type: web
+    name: beneficiary-service
+    runtime: docker
+    dockerContext: ./beneficiaryservice
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server-CHANGE_ME.onrender.com/eureka/
+
+  # -----------------------------
+  # E-Banking Subsystem
+  # -----------------------------
+  - type: web
+    name: ebanking-subsystem
+    runtime: docker
+    dockerContext: ./ebankingsubsystem
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server-CHANGE_ME.onrender.com/eureka/
+
+  # -----------------------------
+  # Utility Service
+  # -----------------------------
+  - type: web
+    name: utility-service
+    runtime: docker
+    dockerContext: ./UtilityService
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server-CHANGE_ME.onrender.com/eureka/
