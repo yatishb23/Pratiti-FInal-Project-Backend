@@ -9,4 +9,4 @@ FROM openjdk:22-jdk-slim
 WORKDIR /app
 COPY --from=build /build/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
-EXPOSE 8761
+EXPOSE 1111
